@@ -1,0 +1,136 @@
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Apply Open Sans globally or on specific elements */
+    background-color: #121212; /* Dark background from your theme */
+    color: #ffffff; /* Primary text color from your theme */
+  }
+  
+  .login-container {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+  }
+  
+  .form-box {
+    width: 30vw;
+    max-width: 400px;
+    background-color: #1e1e1e; /* Paper background from your theme */
+    padding: 32px; /* theme.spacing(4) = 4 * 8px */
+    border-radius: 4px; /* theme.shape.borderRadius */
+    box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+  }
+  
+  .login-title {
+    font-size: 2rem; /* Equivalent to h2 */
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 24px; /* gutterBottom */
+  }
+  
+  .styled-textfield {
+    margin-bottom: 24px; /* sx={{ mb: 3 }} = 3 * 8px */
+    width: 100%; /* fullWidth */
+  }
+  
+  .styled-textfield label {
+    color: #b0bec5; /* theme.palette.text.secondary */
+    display: block; /* Ensure label takes its own line */
+    margin-bottom: 8px;
+  }
+  
+  .styled-textfield input[type="text"],
+  .styled-textfield input[type="password"] {
+    background-color: transparent;
+    border: 1px solid #b0bec5; /* theme.palette.text.secondary */
+    border-radius: 4px;
+    padding: 12px;
+    color: #ffffff; /* theme.palette.text.primary */
+    width: calc(100% - 24px); /* Adjust for padding and border */
+    box-sizing: border-box;
+  }
+  
+  .styled-textfield input[type="text"]:focus,
+  .styled-textfield input[type="password"]:focus {
+    outline: none;
+    border-color: #00c853; /* theme.palette.secondary.main */
+  }
+  
+  .styled-textfield label.focused {
+    color: #00c853; /* theme.palette.secondary.main */
+  }
+  
+  .styled-textfield .error-text {
+    color: #f44336; /* Error color (you might want to define in your theme) */
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+  
+  .login-button {
+    width: 100%; /* fullWidth */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    background-color: #00c853; /* theme.palette.secondary.main */
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px; /* sx={{ mt: 2 }} = 2 * 8px */
+    font-size: 1rem;
+  }
+  
+  .login-button:disabled {
+    background-color: #80cbc4; /* A lighter shade when disabled */
+    cursor: not-allowed;
+  }
+  
+  .link-container {
+    margin-top: 16px; /* sx={{ mt: 2 }} = 2 * 8px */
+    text-align: center;
+  }
+  
+  .styled-link {
+    color: #00c853; /* theme.palette.secondary.main */
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .styled-link:hover {
+    color: #64dd17; /* theme.palette.secondary.light */
+  }
+  
+  .loader-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loader-dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin: 0 4px;
+    animation: dotFlashing 1s infinite linear alternate;
+  }
+  
+  .loader-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .loader-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes dotFlashing {
+    0% { opacity: 0.2; }
+    100% { opacity: 1; }
+  }

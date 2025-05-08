@@ -21,7 +21,10 @@ export default async function getEverything(req: CustomRequest, res: Response) :
         }
         return res.status(200).json({
             success: true,
-            data: userWithData.data, //'data' array
+            data: {
+                dataArray : userWithData.data,
+                username : userWithData.username
+            }, //'data' array
             message: "User data retrieved successfully.",
         });
     } catch(error) {
