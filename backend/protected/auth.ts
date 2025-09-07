@@ -1,42 +1,47 @@
 import { Request, Response, NextFunction } from "express";
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-// Extend the Request interface to include the 'user' property
-interface CustomRequest extends Request {
-    user?: any; 
+// Extend the Express Request interface to include our custom 'user' property
+export interface CustomRequest extends Request {
+    user?: {
+        email: string;
+        id: string;
+    }; 
 }
 
-export default async function auth(req: CustomRequest, res: Response, next : NextFunction): Promise<Response | void> {
+/**
+ * Middleware to authenticate requests using a JWT token.
+ * It verifies the token from the Authorization header and attaches the decoded user payload to the request object.
+ */
+export default function auth(req: CustomRequest, res: Response, next: NextFunction): Response | void {
     try {
         const authHeader = req.header("Authorization");
         if (!authHeader) {
             return res.status(401).json({
-                success:false,
-                message:"Token missing",
+                success: false,
+                message: "Authorization header is missing. Access denied.",
             });
         }
 
         const token = authHeader.replace("Bearer ", "");
         if (!token) {
             return res.status(401).json({
-                success:false,
-                message:"Token missing",
-            });
-        }
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-        const isTokenExpired = decoded.exp < Date.now() / 1000;
-        if (isTokenExpired) {
-            return res.status(401).json({
                 success: false,
-                message: "Token has expired",
+                message: "Token is missing from header. Access denied.",
             });
         }
+
+        // Verify the token. This will automatically throw an error if it's invalid or expired.
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { email: string; id: string; };
+        
+        // Attach the decoded user information to the request object
         req.user = decoded;
-        next();
-    } catch(error) {
+        
+        next(); // Proceed to the next middleware or controller
+    } catch (error) {
         return res.status(401).json({
             success: false,
-            message: "Something went wrong while verifying the user",
+            message: "Invalid or expired token. Please log in again.",
         });
     }
 }
