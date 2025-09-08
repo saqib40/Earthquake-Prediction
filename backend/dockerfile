@@ -1,0 +1,37 @@
+# Stage 1: Build Stage - Use Node.js to build the TypeScript app
+# This stage remains the same.
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+# This compiles TypeScript to JavaScript in the /dist folder
+RUN npm run build
+
+# Stage 2: Production Stage - A smaller image for running the app
+FROM node:18-alpine
+
+WORKDIR /app
+
+# --- THE FIX IS HERE ---
+# Instead of copying the whole node_modules folder, we reinstall only
+# the necessary production dependencies. This ensures that native addons
+# like bcrypt are compiled for the correct final architecture.
+
+# 1. Copy the package files
+COPY package*.json ./
+
+# 2. Install ONLY production dependencies. This is the crucial step.
+RUN npm install --production
+
+# 3. Copy the compiled application code from the builder stage
+COPY --from=builder /app/dist ./dist
+
+# Expose the port the backend runs on
+EXPOSE 8000
+
+# The command to run the compiled JavaScript application
+CMD ["node", "dist/index.js"]

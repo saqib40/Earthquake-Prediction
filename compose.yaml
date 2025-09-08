@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # The React Frontend Service
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  # The Express.js Backend Service
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    # The backend now depends on both the AI service and the new database service
+    depends_on:
+      - prediction-service
+      - mongo
+
+  # The Python Flask AI Service
+  prediction-service:
+    build: ./Niranjans
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+  # --- NEW DATABASE SERVICE ---
+  # This creates a new container running a clean MongoDB instance
+  mongo:
+    image: mongo:latest # Use the official MongoDB image from Docker Hub
+    ports:
+      - "27017:27017" # Map the port so you can connect with tools like Compass if you want
+    restart: unless-stopped
+    # This is crucial: It saves the database data to a 'volume' on your computer,
+    # so the data persists even if you stop and restart the containers.
+    volumes:
+      - mongo-data:/data/db
+
+# --- NEW VOLUME DEFINITION ---
+# This formally creates the named volume we used above.
+volumes:
+  mongo-data:
+

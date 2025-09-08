@@ -1,0 +1,17 @@
+# Git and IDE files
+.git
+.vscode
+*.log
+
+# Dependency folders (these will be installed inside the container)
+frontend/node_modules
+backend/node_modules
+**/__pycache__
+
+# Build artifacts (these will be created inside the container)
+frontend/build
+backend/dist
+
+# Environment files
+.env
+backend/.env
