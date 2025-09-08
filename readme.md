@@ -23,6 +23,7 @@ npm run start
 
 # 5- get into another terminal (don't close this one either)
 # get into Niranjans
+# unzip the zipped files
 pip install -r requirements.txt
 python prediction.py
 
