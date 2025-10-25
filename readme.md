@@ -3,7 +3,7 @@
 # Install the docker desktop
 # Clone the repo
 cd Earthquake-Prediction
-docker-compose up --build
+docker compose up --build
 
 # visit => http://localhost:3000/
 ```
