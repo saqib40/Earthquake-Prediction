@@ -24,4 +24,3 @@ db.users.find()
 
 # See all the prediction data that has been saved
 db.datas.find()
-```

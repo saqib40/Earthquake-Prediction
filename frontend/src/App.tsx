@@ -6,6 +6,7 @@ import Login from './pages/login.tsx';
 import Signup from './pages/signup.tsx';
 import Dashboard from './pages/dashboard.tsx';
 import Predict from './pages/predict.tsx';
+import PredictLSTM from './pages/PredictLSTM.tsx';
 
 /**
  * A wrapper component that protects routes requiring authentication.
@@ -48,6 +49,14 @@ export default function App() {
               <Predict />
             </ProtectedRoute>
           } 
+        />
+        <Route
+          path="/predict-lstm"
+          element={
+            <ProtectedRoute>
+              <PredictLSTM />
+            </ProtectedRoute>
+          }
         />
         
         {/* --- Fallback Route --- */}
